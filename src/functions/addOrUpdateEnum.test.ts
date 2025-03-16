@@ -6,6 +6,7 @@ describe("addOrUpdateEnum", () => {
 
    let knex
    before(async () => {
+
       knex = getNewKnexInstance()
    })
 
