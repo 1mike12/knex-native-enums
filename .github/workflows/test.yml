@@ -12,8 +12,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
-        postgres-version: [12, 13, 14, 15, 16]
+        node-version: [16.x, 22.x]
+        postgres-version: [9, 16]
 
     services:
       postgres-test:  # This name matches DB_HOST_TEST in your .env
