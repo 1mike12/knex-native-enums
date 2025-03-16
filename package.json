@@ -1,0 +1,37 @@
+{
+  "name": "knex-native-enums",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "license": "MS-PL",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsup",
+    "test": "mocha"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.cjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "devDependencies": {
+    "@swc-node/register": "^1.10.9",
+    "@swc/cli": "^0.1.59",
+    "@swc/core": "^1.3.80",
+    "@types/chai": "^5.0.1",
+    "@types/mocha": "^10.0.10",
+    "chai": "^4.3.7",
+    "dotenv": "^16.4.7",
+    "mocha": "^10.2.0",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.3.6",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "knex": "^3.1.0",
+    "pg": "^8.14.0"
+  }
+}

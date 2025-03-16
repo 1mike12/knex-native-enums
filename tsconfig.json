@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "target": "ES2022",
+    "moduleResolution": "node",
+    "module": "CommonJS",
+    "strict": false,
+    // need this to have IDE not collapse <T | null | undefined> to just T
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "resolveJsonModule": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

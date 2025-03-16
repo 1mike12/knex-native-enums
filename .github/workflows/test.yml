@@ -1,0 +1,58 @@
+name: Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+        postgres-version: [12, 13, 14, 15, 16]
+
+    services:
+      postgres-test:  # This name matches DB_HOST_TEST in your .env
+        image: postgres:${{ matrix.postgres-version }}
+        env:
+          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD_TEST || 'postgres' }}
+          POSTGRES_USER: ${{ env.DB_USER_TEST || 'postgres' }}
+          POSTGRES_DB: ${{ env.DB_NAME_TEST || 'knex_native_enums' }}
+        ports:
+          # Map the port from your .env or use default
+          - ${{ env.DB_PORT_TEST || '5429' }}:5432
+        # Health check to wait until postgres is ready
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Load environment variables
+        uses: xom9ikk/dotenv@v2
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+        env:
+          # Use values from .env loaded by dotenv
+          PGHOST: localhost  # In GitHub Actions, we need to use localhost
+          PGUSER: ${{ env.DB_USER_TEST }}
+          PGPASSWORD: ${{ env.DB_PASSWORD_TEST }}
+          PGDATABASE: ${{ env.DB_NAME_TEST }}
+          PGPORT: ${{ env.DB_PORT_TEST }}
