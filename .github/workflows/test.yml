@@ -29,7 +29,7 @@ jobs:
           POSTGRES_USER: ${{ env.DB_USER_TEST }}
           POSTGRES_DB: ${{ env.DB_NAME_TEST }}
         ports:
-          - ${{ env.DB_PORT_TEST }}:5432
+          - "5429:5432"
 
     steps:
       - uses: actions/checkout@v3
