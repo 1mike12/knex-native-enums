@@ -5,17 +5,17 @@ import {Knex} from 'knex';
  * Throws an error if the type already exists (use addOrUpdateEnum for updating).
  *
  * @param knex - The Knex instance.
- * @param typeName - The name for the PostgreSQL enum type.
+ * @param enumName - The name for the PostgreSQL enum type.
  * @param tsEnum - The TypeScript enum object.
  *
  */
 export async function addEnum(
    knex: Knex,
-   typeName: string,
+   enumName: string,
    tsEnum: object
 ): Promise<void> {
    const values = Object.values(tsEnum)
    .map((val) => `'${val}'`)
    .join(', ');
-   await knex.raw(`CREATE TYPE "${typeName}" AS ENUM (${values});`);
+   await knex.raw(`CREATE TYPE "${enumName}" AS ENUM (${values});`);
 }
